@@ -79,6 +79,19 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    
+    SmartDashboard.putBoolean("Breakbeam", breakbeam.get());
+    SmartDashboard.putBoolean("MagSwitch", magLimitSwitch.get());
+    SmartDashboard.putNumber("Potentiometer Angle", potentiometer.get() * 180.0);
+    SmartDashboard.putNumber("Limelight Vertical Angle", limelightTable.getEntry("ty").getDouble(0.0));
+    SmartDashboard.putNumber("Limelight Horizontal Angle", limelightTable.getEntry("tx").getDouble(0.0));
+    SmartDashboard.putBoolean("Compressor Running", compressor.enabled());
+
+    if (button.get())
+      solenoid.toggle();
+
+    if (!compressor.enabled())
+      solenoid.set(Value.kForward);
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -117,19 +130,6 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    
-    SmartDashboard.putBoolean("Breakbeam", breakbeam.get());
-    SmartDashboard.putBoolean("MagSwitch", magLimitSwitch.get());
-    SmartDashboard.putNumber("Potentiometer Angle", potentiometer.get() * 180.0);
-    SmartDashboard.putNumber("Limelight Vertical Angle", limelightTable.getEntry("ty").getDouble(0.0));
-    SmartDashboard.putNumber("Limelight Horizontal Angle", limelightTable.getEntry("tx").getDouble(0.0));
-    SmartDashboard.putBoolean("Compressor Running", compressor.enabled());
-
-    if (button.get())
-      solenoid.toggle();
-
-    if (!compressor.enabled())
-      solenoid.set(Value.kForward);
   }
 
   @Override
